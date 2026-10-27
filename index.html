@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAITOR — Online Book Recommendation Using Collaborative Filtering</title>
+  <meta name="description" content="VAITOR: A modern online book recommendation system using Collaborative Filtering. University project by DIU students.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+            accent: { 400:'#fbbf24',500:'#f59e0b',600:'#d97706' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hero-gradient { background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 45%, #0ea5e9 100%); }
+    .card-hover { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(14,165,233,0.25); }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#fbbf24; transition:width 0.3s; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    html { scroll-behavior: smooth; }
+    .fade-in { animation: fadeIn 0.8s ease-out; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-105 transition">V</div>
+          <span class="text-xl font-bold text-primary-800 tracking-tight">VAITOR</span>
+        </a>
+        <div class="hidden md:flex items-center gap-7">
+          <a href="index.html" class="nav-link active text-primary-700 font-semibold">Home</a>
+          <a href="#objectives" class="nav-link text-slate-600 hover:text-primary-700 font-medium">Objectives</a>
+          <a href="project.html" class="nav-link text-slate-600 hover:text-primary-700 font-medium">Project</a>
+          <a href="demo.html" class="nav-link text-slate-600 hover:text-primary-700 font-medium">Demo</a>
+          <a href="data-source.html" class="nav-link text-slate-600 hover:text-primary-700 font-medium">Data</a>
+          <a href="about.html" class="nav-link text-slate-600 hover:text-primary-700 font-medium">About</a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100">
+          <i class="fas fa-bars text-xl text-slate-700"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg">
+      <div class="px-4 py-3 space-y-1">
+        <a href="index.html" class="block py-2.5 px-3 rounded-lg text-primary-700 font-medium bg-primary-50">Home</a>
+        <a href="#objectives" class="block py-2.5 px-3 rounded-lg text-slate-600 hover:bg-slate-50">Objectives</a>
+        <a href="project.html" class="block py-2.5 px-3 rounded-lg text-slate-600 hover:bg-slate-50">Project</a>
+        <a href="demo.html" class="block py-2.5 px-3 rounded-lg text-slate-600 hover:bg-slate-50">Demo</a>
+        <a href="data-source.html" class="block py-2.5 px-3 rounded-lg text-slate-600 hover:bg-slate-50">Data Source</a>
+        <a href="about.html" class="block py-2.5 px-3 rounded-lg text-slate-600 hover:bg-slate-50">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-gradient pt-28 pb-24 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07]">
+      <div class="absolute top-16 left-8 text-[9rem]">📚</div>
+      <div class="absolute bottom-8 right-16 text-[7rem]">📖</div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 text-[12rem]">✨</div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
+            <i class="fas fa-graduation-cap"></i> University Project • DIU
+          </div>
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-5 tracking-tight">
+            VAITOR
+          </h1>
+          <p class="text-xl sm:text-2xl text-primary-100 font-light mb-6 leading-relaxed">
+            Online Book Recommendation<br>Using <span class="font-semibold text-white">Collaborative Filtering</span>
+          </p>
+          <p class="text-primary-100/90 text-lg mb-8 max-w-lg leading-relaxed">
+            An intelligent web application that suggests books based on user preferences and similar readers’ ratings — saving time and discovering better reads.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="demo.html" class="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-400 text-slate-900 font-semibold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition">
+              <i class="fas fa-play-circle"></i> Watch Demo
+            </a>
+            <a href="project.html" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 text-white font-medium px-6 py-3.5 rounded-xl transition">
+              <i class="fas fa-folder-open"></i> Project Files
+            </a>
+          </div>
+        </div>
+        <div class="hidden lg:flex justify-center">
+          <div class="relative">
+            <div class="w-80 h-80 rounded-3xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center shadow-2xl">
+              <div class="text-center">
+                <div class="text-8xl mb-4">📚</div>
+                <p class="text-white/80 font-medium">Smart Book<br>Recommendations</p>
+              </div>
+            </div>
+            <div class="absolute -bottom-4 -right-4 bg-accent-500 text-slate-900 text-sm font-bold px-4 py-2 rounded-xl shadow-lg">
+              CF Powered
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About the Project -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 mb-6">What is VAITOR?</h2>
+          <p class="text-slate-600 text-lg leading-relaxed mb-5">
+            This project builds an online book web application that suggests books using a <strong>recommendation system</strong> — one of the strongest tools to increase better services and retain users.
+          </p>
+          <p class="text-slate-600 text-lg leading-relaxed mb-5">
+            The system recommends books that match the user’s interest. It uses <strong>Collaborative Filtering</strong> to produce efficient and effective recommendations.
+          </p>
+          <p class="text-slate-600 text-lg leading-relaxed">
+            Collaborative recommendation aggregates ratings of objects, recognizes commonalities between users based on their ratings, and generates new personalized recommendations.
+          </p>
+        </div>
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-3xl p-8 border border-primary-100">
+          <h3 class="text-xl font-bold text-primary-900 mb-5 flex items-center gap-2">
+            <i class="fas fa-user-tie text-primary-600"></i> Supervised By
+          </h3>
+          <div class="flex items-start gap-5">
+            <div class="w-20 h-20 rounded-2xl bg-primary-200 flex items-center justify-center text-3xl flex-shrink-0">
+              👨‍🏫
+            </div>
+            <div>
+              <p class="font-bold text-lg text-slate-900">Prof. Dr. Syed Akhter Hossain</p>
+              <p class="text-primary-700 font-medium mt-1">Dean & Head — CSE</p>
+              <p class="text-slate-600 text-sm">Canadian University of Bangladesh</p>
+              <p class="text-slate-500 text-sm mt-2">Former Professor & Head — CSE<br>Daffodil International University</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectives -->
+  <section id="objectives" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Project Objectives</h2>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+          The main goal is to build an optimized, user-friendly website that breaks traditional systems and creates a new book recommendation experience.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">Save User Time</h3>
+          <p class="text-slate-600">Helps users discover relevant books quickly instead of searching manually for hours.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">Wide Choices + Recommendations</h3>
+          <p class="text-slate-600">Provides a large selection of books while intelligently recommending the most suitable ones.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">Scalable Algorithm</h3>
+          <p class="text-slate-600">The recommending algorithm scales well with co-rated book items as the data grows.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">High Efficiency</h3>
+          <p class="text-slate-600">Designed to be very efficient and practical for real-world usage by students and readers.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">User Data Analysis</h3>
+          <p class="text-slate-600">Analyzes user data and ratings to generate accurate new book recommendations.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl mb-5">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">Break Traditional Systems</h3>
+          <p class="text-slate-600">Moves beyond basic catalogs to create a modern, intelligent recommendation experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl font-bold text-slate-900 text-center mb-10">Explore the Project</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <a href="project.html" class="group card-hover block bg-gradient-to-br from-primary-600 to-primary-500 text-white rounded-2xl p-6 shadow-lg">
+          <i class="fas fa-folder-open text-3xl mb-4 opacity-90 group-hover:scale-110 transition"></i>
+          <h3 class="font-bold text-lg mb-1">Project Files</h3>
+          <p class="text-primary-100 text-sm">Reports, presentations & progress</p>
+        </a>
+        <a href="demo.html" class="group card-hover block bg-gradient-to-br from-amber-500 to-orange-500 text-white rounded-2xl p-6 shadow-lg">
+          <i class="fas fa-play-circle text-3xl mb-4 opacity-90 group-hover:scale-110 transition"></i>
+          <h3 class="font-bold text-lg mb-1">Live Demo</h3>
+          <p class="text-amber-100 text-sm">Watch the system in action</p>
+        </a>
+        <a href="data-source.html" class="group card-hover block bg-gradient-to-br from-emerald-600 to-teal-500 text-white rounded-2xl p-6 shadow-lg">
+          <i class="fas fa-database text-3xl mb-4 opacity-90 group-hover:scale-110 transition"></i>
+          <h3 class="font-bold text-lg mb-1">Data Source</h3>
+          <p class="text-emerald-100 text-sm">Datasets used for research</p>
+        </a>
+        <a href="about.html" class="group card-hover block bg-gradient-to-br from-violet-600 to-purple-500 text-white rounded-2xl p-6 shadow-lg">
+          <i class="fas fa-users text-3xl mb-4 opacity-90 group-hover:scale-110 transition"></i>
+          <h3 class="font-bold text-lg mb-1">Team & About</h3>
+          <p class="text-violet-100 text-sm">Meet the developers</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold">V</div>
+          <div>
+            <p class="font-bold text-white">VAITOR</p>
+            <p class="text-sm text-slate-400">Online Book Recommendation System</p>
+          </div>
+        </div>
+        <p class="text-sm text-slate-400 text-center">
+          A university project under Daffodil International University (DIU)<br>
+          Supervised by Prof. Dr. Syed Akhter Hossain
+        </p>
+        <p class="text-sm text-slate-500">© 2024–2026 VAITOR Team</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  </script>
+</body>
+</html>

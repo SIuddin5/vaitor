@@ -1,1 +1,59 @@
-# vaitor
+# VAITOR — Modern Website
+
+A clean, attractive, fully responsive website converted from the original Google Sites project:
+
+**Original:** https://sites.google.com/diu.edu.bd/vaitor  
+**Project:** Online Book Recommendation Using Collaborative Filtering
+
+## Pages Included
+
+| File              | Description                              |
+|-------------------|------------------------------------------|
+| `index.html`      | Home + Project overview + Objectives     |
+| `about.html`      | Supervisor + Team members                |
+| `project.html`    | Project documents & Defense materials (with download buttons) |
+| `demo.html`       | Demo video section                       |
+| `data-source.html`| Datasets used in the research            |
+
+## How to Use (Free Hosting)
+
+### Option 1: GitHub Pages (Recommended)
+
+1. Create a new GitHub repository (e.g. `vaitor-website`).
+2. Upload all files from this folder into the repository.
+3. Go to **Settings → Pages**.
+4. Under "Source", select the branch (usually `main`) and folder `/ (root)`.
+5. Save. Your site will be live at:  
+   `https://YOUR_USERNAME.github.io/vaitor-website`
+
+### Option 2: Netlify (Drag & Drop)
+
+1. Go to [https://app.netlify.com/drop](https://app.netlify.com/drop)
+2. Drag the entire `vaitor-website` folder onto the page.
+3. Your site is live instantly with a free Netlify URL.
+4. You can later connect a custom domain for free.
+
+### Option 3: Vercel / Cloudflare Pages
+
+Similar drag-and-drop or Git-based deployment. All are free for static sites.
+
+## Adding Your Real Files
+
+- **Documents / Presentations / Reports** → Put PDF, PPTX, DOCX inside the `assets/` folder and update the download links in `project.html`.
+- **Datasets** → Put ODS / XLSX / CSV files in `assets/` and update links in `data-source.html`.
+- **Demo Video** →  
+  - Best: Upload to YouTube and embed the iframe in `demo.html`.  
+  - Or place an MP4 in `assets/` and use an HTML5 `<video>` tag.
+
+## Features
+
+- Fully responsive (mobile + tablet + desktop)
+- Modern design with Tailwind CSS
+- Smooth navigation & mobile menu
+- Attractive cards and hover effects
+- Ready for download buttons
+- Zero cost to host
+
+---
+
+Built as a free alternative to Google Sites for the VAITOR university project.
