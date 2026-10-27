@@ -1,4 +1,4 @@
-# VAITOR — Modern Website
+# VAITOR 
 
 A clean, attractive, fully responsive website converted from the original Google Sites project:
 
