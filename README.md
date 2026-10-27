@@ -3,6 +3,7 @@
 A clean, attractive, fully responsive website converted from the original Google Sites project:
 
 **Original:** https://sites.google.com/diu.edu.bd/vaitor  
+**Link:** https://siuddin5.github.io/vaitor/ 
 **Project:** Online Book Recommendation Using Collaborative Filtering
 
 ## Pages Included
