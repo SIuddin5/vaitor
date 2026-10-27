@@ -15,27 +15,7 @@ A clean, attractive, fully responsive website converted from the original Google
 | `demo.html`       | Demo video section                       |
 | `data-source.html`| Datasets used in the research            |
 
-## How to Use (Free Hosting)
 
-### Option 1: GitHub Pages (Recommended)
-
-1. Create a new GitHub repository (e.g. `vaitor-website`).
-2. Upload all files from this folder into the repository.
-3. Go to **Settings → Pages**.
-4. Under "Source", select the branch (usually `main`) and folder `/ (root)`.
-5. Save. Your site will be live at:  
-   `https://YOUR_USERNAME.github.io/vaitor-website`
-
-### Option 2: Netlify (Drag & Drop)
-
-1. Go to [https://app.netlify.com/drop](https://app.netlify.com/drop)
-2. Drag the entire `vaitor-website` folder onto the page.
-3. Your site is live instantly with a free Netlify URL.
-4. You can later connect a custom domain for free.
-
-### Option 3: Vercel / Cloudflare Pages
-
-Similar drag-and-drop or Git-based deployment. All are free for static sites.
 
 ## Adding Your Real Files
 
